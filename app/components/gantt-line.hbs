@@ -1,18 +1,27 @@
 
-<!--
-GANTT-LINE
-<hr>
 
-  <li>{{@dateStart}}</li>
-  <li>{{@dateEnd}}</li>
+<div class="gantt-line">
+  <GanttLineTitle @project={{@project}}/>
   
-  <li>{{@title}}</li>
-<hr>
--->
+  <div class="gantt-line-timeline">
+      <div class="gantt-line-bar" >
+         <!--  PROJECT TOP LINE -->
+         <GanttLineInlineChilds @project={{@project}}/>
+      </div>
+  </div>
 
-<GanttLineTitle @project={{@project}}>
-</GanttLineTitle>
+</div>
 
-<GanttLineInlineChilds @project={{@project}}>
-</GanttLineInlineChilds>
+{{! child lines }}
+
+<div class="gantt-line-childs">
+ {{#each @project.jobs as |job|}}     
+
+       <ChildLine  @job={{job}}
+                   @parentLine={{this}}
+                   >
+       </ChildLine>
+ {{/each}}     
+
+</div>
 

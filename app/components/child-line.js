@@ -7,7 +7,7 @@ import {computed,get,set} from '@ember/object';
 import {isEmpty} from '@ember/utils';
 import {alias, or} from '@ember/object/computed';
 
-export default class GanttLineComponent extends Component {
+export default class ChildLineComponent extends Component {
 
 
 

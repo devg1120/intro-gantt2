@@ -1,32 +1,9 @@
-<!-- {{ @project.jobs }} -->
 
-      {{#each @project.jobs as |job|}}
-         <br> 
-            <span>
-              <svg width="12px" height="12px"><circle fill={{job.color}} cx="5" cy="6" r="5" width="9" height="9"></circle></svg>   
-              {{job.title}}
-            </span>
+{{#each @periods as |period|}}
+  <div style={{period.style}}></div>
+{{/each}}
 
-      {{/each}}
-         <br> 
 
-<!--
-      {{#each @project.childs as |job|}}
-        {{! child lines}}
-        {{#line.childLine dateStart=job.dateStart dateEnd=job.dateEnd isEditable=true
-                          color=job.color onDateChange=(action "datesChanged" job) as |childLine|}}
+<div> AAAAAAAAAAAAAAAAAAAAA</div>
 
-          {{! more complex title inner}}
-          {{#childLine.title}}
-            <span>
-              <svg width="12px" height="12px"><circle fill={{job.color}} cx="5" cy="6" r="5" width="9" height="9"></circle></svg>
-              {{job.title}}
-            </span>
-          {{/childLine.title}}
 
-          {{! add something to the bar content}}
-          {{#childLine.barContent}}{{job.title}}{{/childLine.barContent}}
-
-        {{/line.childLine}}
-      {{/each}}
--->

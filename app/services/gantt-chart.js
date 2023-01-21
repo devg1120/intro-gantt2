@@ -83,7 +83,7 @@ export default class GanttChartService extends Service {
     var pj = new Map();
     projects.push(pj);
     this.mixin(pj);
-    pj['title'] = `Coca Cola Logo`;
+    pj['title'] = `Coca Cola Logo OK`;
     pj['childs'] = [
       {
         title: types[0].title,
@@ -197,10 +197,10 @@ export default class GanttChartService extends Service {
       }
     }
 
-    let projects = new Array();
+    let projects = new Array();  ///     honnbann 
     let today = new Date();
     let types = jobTypes;
-    var pj = new Project('Coca Cola Logo');
+    var pj = new Project('Coca Cola Logo--');
     pj.childs = [
       {
         title: types[0].title,
@@ -271,7 +271,7 @@ export default class GanttChartService extends Service {
     // P1
     projects.push(
       ProjectObject.create({
-        title: `Coca Cola Logo`,
+        title: `Coca Cola Logo P1`,
         childs: [
           {
             title: types[0].title,
