@@ -39,8 +39,8 @@ export default class GanttLineComponent extends Component {
   classNames= ['gantt-line-wrap'];
   classNameBindings= ['isResizing','isMoving'];
 
-  init() {
-    this._super(...arguments);
+  constructor(owner, args) {
+    super(owner, args);
 
     if (get(this, 'isEditable') && !this._handleMoveStart) {
       this._handleMoveStart = bind(this, this.activateMove);
