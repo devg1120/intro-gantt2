@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 
 
 import { bind } from '@ember/runloop';
-import { htmlSafe } from '@ember/template';
+import { htmlSafe } from '@ember/string';
 import {computed,get,set} from '@ember/object';
 import {isEmpty} from '@ember/utils';
 import {alias, or} from '@ember/object/computed';
@@ -41,10 +41,7 @@ export default class ChildLineComponent extends Component {
 
   constructor(owner, args) {
     super(owner, args);
-    this.dateStart = args.job.dateStart;
-    this.dateEnd   = args.job.dateEnd;
-    this.color   = args.job.color;
-    this.chart   = args.chart;
+
     if (get(this, 'isEditable') && !this._handleMoveStart) {
       this._handleMoveStart = bind(this, this.activateMove);
       this._handleResizeLeft = bind(this, this.activateResizeLeft);
@@ -106,32 +103,27 @@ export default class ChildLineComponent extends Component {
   },
 */
 
-  @computed('dateStart', 'dayWidth','chart.viewStartDate')
-  get barOffset(){
+  barOffset= computed('dateStart', 'dayWidth','chart.viewStartDate', function(){
     return get(this, 'chart').dateToOffset( get(this, 'dateStart') );
-  }
+  });
 
   // width of bar on months
-  @computed('dateStart', 'dateEnd', 'dayWidth') 
-  get barWidth() {
+  barWidth= computed('dateStart', 'dateEnd', 'dayWidth', function() {
     return get(this, 'chart').dateToOffset( get(this, 'dateEnd'), get(this, 'dateStart'), true );
-  }
+  });
 
   // styling for left/width
-
-  @computed('barOffset','barWidth')
-  get barStyle() {
+  barStyle= computed('barOffset','barWidth', function() {
 
     let style = `left:${get(this, 'barOffset')}px;width:${get(this, 'barWidth')}px;`;
     if (get(this, 'color')) {
       style+= `background-color:${get(this, 'color')}`;
     }
     return htmlSafe(style);
-  }
+  });
 
   // TODO: title -> ?
-  @computed('dateStart', 'dateEnd')
-  get barTitle() {
+  barTitle= computed('dateStart', 'dateEnd', function() {
     let days = get(this, 'chart').dateToOffset( get(this, 'dateStart') ) / get(this, 'dayWidth');
     let start = get(this, 'dateStart'),
         end = get(this, 'dateEnd');
@@ -140,7 +132,7 @@ export default class ChildLineComponent extends Component {
       return `days: ${days} : `+start.toString()+' to '+end.toString();
     }
     return '';
-  }
+  });
 
 
   /**

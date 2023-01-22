@@ -9,6 +9,9 @@ import EmberObject from '@ember/object';
 import MinMaxChildDatesMixin from '../mixins/min-max-child-dates-mixin';
 import { alias } from '@ember/object/computed';
 import dateUtil from '../utils/date-util';
+import { isNone } from '@ember/utils';
+import { htmlSafe } from '@ember/template';
+
 
 import { addObserver, removeObserver } from '@ember/object/observers';
 

@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 
 
 import { bind } from '@ember/runloop';
-import { htmlSafe } from '@ember/string';
+import { htmlSafe } from '@ember/template';
 import {computed,get,set} from '@ember/object';
 import {isEmpty} from '@ember/utils';
 import {alias, or} from '@ember/object/computed';
@@ -49,6 +49,34 @@ export default class GanttLineComponent extends Component {
       this._handleResizeMove = bind(this, this.resizeBar);
       this._handleFinish = bind(this, this.deactivateAll);
     }
+/*
+    // bar reference
+    let bar = this.element.querySelector('.gantt-line-bar');
+    set(this, 'barElement', bar);
+
+    // chart reference
+    let chart = get(this, 'chart').element;
+    set(this, 'chartElement', chart);
+
+    // below, only if editable
+    if (!get(this, 'isEditable')) return;
+
+    // register resize and drag handlers
+    let barResizeL = this.element.querySelector('.bar-resize-l');
+    let barResizeR = this.element.querySelector('.bar-resize-r');
+
+    // resize
+    barResizeL.addEventListener('mousedown', this._handleResizeLeft);
+    barResizeR.addEventListener('mousedown', this._handleResizeRight);
+
+    // move
+    bar.addEventListener('mousedown', this._handleMoveStart);
+
+    // resize/move
+    document.addEventListener('mousemove', this._handleResizeMove);
+    document.addEventListener('mouseup', this._handleFinish);
+
+*/
   };
 
 /*
@@ -103,27 +131,31 @@ export default class GanttLineComponent extends Component {
   },
 */
 
-  barOffset= computed('dateStart', 'dayWidth','chart.viewStartDate', function(){
+  @computed('dateStart', 'dayWidth','chart.viewStartDate')
+  get barOffset(){
     return get(this, 'chart').dateToOffset( get(this, 'dateStart') );
-  });
+  }
 
   // width of bar on months
-  barWidth= computed('dateStart', 'dateEnd', 'dayWidth', function() {
+  @computed('dateStart', 'dateEnd', 'dayWidth') 
+  get barWidth() {
     return get(this, 'chart').dateToOffset( get(this, 'dateEnd'), get(this, 'dateStart'), true );
-  });
+  }
 
   // styling for left/width
-  barStyle= computed('barOffset','barWidth', function() {
+  @computed('barOffset','barWidth') 
+  get barStyle() {
 
     let style = `left:${get(this, 'barOffset')}px;width:${get(this, 'barWidth')}px;`;
     if (get(this, 'color')) {
       style+= `background-color:${get(this, 'color')}`;
     }
     return htmlSafe(style);
-  });
+  }
 
   // TODO: title -> ?
-  barTitle= computed('dateStart', 'dateEnd', function() {
+  @computed('dateStart', 'dateEnd') 
+  get barTitle() {
     let days = get(this, 'chart').dateToOffset( get(this, 'dateStart') ) / get(this, 'dayWidth');
     let start = get(this, 'dateStart'),
         end = get(this, 'dateEnd');
@@ -132,7 +164,7 @@ export default class GanttLineComponent extends Component {
       return `days: ${days} : `+start.toString()+' to '+end.toString();
     }
     return '';
-  });
+  }
 
 
   /**

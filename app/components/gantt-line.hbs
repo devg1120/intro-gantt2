@@ -6,7 +6,9 @@
   <div class="gantt-line-timeline">
       <div class="gantt-line-bar" >
          <!--  PROJECT TOP LINE -->
-         <GanttLineInlineChilds @project={{@project}}/>
+	 
+         <GanttLineInlineChilds  @project={{@project}}/>
+	 
       </div>
   </div>
 
@@ -16,12 +18,16 @@
 
 <div class="gantt-line-childs">
  {{#each @project.jobs as |job|}}     
-
+       <!--
+       <GanttLineInlineChilds  @project={{@project}}/>
+       -->
+       
        <ChildLine  @job={{job}}
                    @parentLine={{this}}
                    @chart={{@chart}}
                    >
        </ChildLine>
+       
  {{/each}}     
 
 </div>

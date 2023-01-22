@@ -6,7 +6,7 @@ import {isArray, A} from "@ember/array";
 
 import dateUtil from '../utils/date-util';
 
-export default class GanttLineInlineChildsComponent extends Component {
+export default class LineInlineChildsComponent extends Component {
 
   layout;
   classNames= ['gantt-line-inline-childs'];
@@ -22,11 +22,24 @@ export default class GanttLineInlineChildsComponent extends Component {
   constructor(owner, args) {
     super(owner, args);
     this.chart = args.chart;
-    this.childLines = args.childLines;
-    this.parentLine = args.parentLine;
-     
 
+    //console.log(this.chart);
+    //this.childLines = args.childLines;
+    //this.parentLine = args.parentLine;
+     
+    this.job = args.job;
+
+    //console.log(this.job);
+    this.dateStart = this.job.dateStart;
+    this.dateEnd   = this.job.dateEnd; 
+    this.color   = this.job.color;   
+    this.style   = args.style;   
+    this.title   = args.title;   
+    //console.log(this.color)
+    //console.log(this.style)
+    //console.log(this.title)
     this.calculatePeriods();
+    //console.log(this.periods);
   }
 
 /*
@@ -45,23 +58,40 @@ export default class GanttLineInlineChildsComponent extends Component {
   calculatePeriods() {
 
     // go through all jobs and generate compound child elements
+   /*
     let chart = get(this, 'chart'),
         childs = get(this, 'childLines'),
         start = get(this, 'parentLine.dateStart'),
         end = get(this, 'parentLine.dateEnd');
-
+   */
+    let chart = get(this, 'chart'),
+        childs = get(this, 'childLines'),
+        start = get(this, 'dateStart'),
+        end = get(this, 'dateEnd');
     // generate period segments
+    //console.log(start);
+    //console.log(end);
+    //console.log(childs);
     let periods = dateUtil.mergeTimePeriods(childs, start, end);
+
+    periods = [{
+          dateStart: start,
+          dateEnd: end,
+	  //backgraund: this.color,
+          childs: null
+    }];
+  
 
     // calculate width of segments
     if (periods && periods.length > 0) {
       periods.forEach(period => {
-        period.width = chart.dateToOffset(period.dateEnd, period.dateStart, true);
+        period.width = this.chart.dateToOffset(period.dateEnd, period.dateStart, true);
         period.background = this.getBackgroundStyle(period.childs);
         period.style = htmlSafe(`width:${period.width}px;background:${period.background};`);
       });
     }
 
+    console.log(periods);
     set(this, 'periods', periods);
   };
 

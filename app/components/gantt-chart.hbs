@@ -1,36 +1,20 @@
 <div class="gantt-chart">
-<div class="gantt-chart-innner">
+   <div class="gantt-chart-innner">
+   
+     <GanttTimeline  @showToday={{@showToday}} @chart={{this}} />
+   
+     <div class="gantt-lines">
+        {{#each this.projects as |project|}}
+             <GanttLine  @dateStart={{project.minStartDate}}
+                         @dateEnd={{project.maxEndDate}}
+           	         @inlineChilds={{project.jobs}}
+           	         @title={{project.title}}
+           	         @project={{project}}
+           	         @chart={{this}}
+           	         as |line|>
+             </GanttLine>
+        {{/each}}
+     </div>
 
-
-<!--
-  GANTT-CHART-START
-  <hr>
-  <li>{{@dayWidth}}</li>
-  <li>{{@viewStartDate}}</li>
-  <li>{{@headerTitle}}</li>
-  <hr>
-  <li>{{this.viewStartDate}}</li>
-  <li>{{this.viewEndDate}}</li>
-
-  <hr>
-  -->
-
-  <GanttTimeline
-         @showToday={{@showToday}} @chart={{this}}
-  >
-  </GanttTimeline>
-  <div class="gantt-lines">
-  {{#each this.projects as |project|}}
-      <!-- <li>{{project.title}} </li> -->
-       <GanttLine  @dateStart={{project.minStartDate}}
-                   @dateEnd={{project.maxEndDate}}
-		   @inlineChilds={{project.jobs}}
-		   @title={{project.title}}
-		   @project={{project}}
-		   @chart={this}}
-		   as |line|>
-       </GanttLine>
-  {{/each}}
-  </div>
-</div>
+   </div>
 </div>

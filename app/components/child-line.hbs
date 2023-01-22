@@ -1,21 +1,36 @@
 
 
 <div class="gantt-line">
-                <span>
-                  <svg width="12px" height="12px"><circle fill={{@job.color}} cx="5" cy="6" r="5" width="9" height="9"></circle></svg>
-                  {{@job.title}}
-                </span>
-  
-  <div class="gantt-line-timeline">
-      <div class="gantt-line-bar" >
-         <!--  PROJECT TOP LINE -->
-	 <!--
-         <GanttLineInlineChilds @project={{@project}}/>
-	 -->
-         <GanttLineInlineChilds @chart={{@chart}} @parentLine={{this}}/>
+   <div class="gantt-line-title ember-view">                 
+      <span>
+        <svg width="12px" height="12px"><circle fill={{@job.color}} cx="5" cy="6" r="5" width="9" height="9"></circle></svg>
+           {{@job.title}}
+      </span>
+   </div>
+   <div class="gantt-line-timeline">
+   <!--
+       <div class="gantt-line-bar {{if isEditable 'gantt-line-bar-editable'}}" style={{barStyle}} title={{barTitle}} >
+       -->
+       <div class="gantt-line-bar" style={{this.barStyle}} >
+	    <!--
+            <GanttLineInlineChilds @project={{@project}}/>
+	    -->
+	<!--
+            <GanttLineInlineChilds   @chart={{@chart}} @parentLine={{@parentLine}} />
+            <GanttLineInlineChilds   @job={{@job}} @chart={{@chart}} @parentLine={{this}} />
+	    -->
+	    <!--
+            <LineInlineChilds   @job={{@job}} @chart={{@chart}} @parentLine={{this}} />
+            <LineInlineChilds   @job={{@job}} @chart={{@chart}} @parentLine={{@parentLine}} @style={{barStyle}} @title={{barTitle}}  />
+            <LineInlineChilds   @job={{@job}} @chart={{@chart}} @parentLine={{@parentLine}}  />
+	    -->
+            <LineInlineChilds   @job={{@job}} @chart={{@chart}} @parentLine={{@parentLine}} @style={{this.barStyle}} @title={{this.barTitle}}  />
+	    
+	    <div class="gantt-line-bar-content ember-view">{{@job.title}}</div>
+            <div class="bar-resize-l"></div>
+            <div class="bar-resize-r"></div>
       </div>
-  </div>
-
+   </div>
 </div>
 
 
