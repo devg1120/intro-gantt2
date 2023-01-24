@@ -4,10 +4,12 @@
   <GanttLineTitle @project={{@project}}/>
   
   <div class="gantt-line-timeline">
-      <div class="gantt-line-bar" >
-         <!--  PROJECT TOP LINE -->
-	 
-         <GanttLineInlineChilds  @project={{@project}}/>
+
+       <div class="gantt-line-bar" style={{this.barStyle}} title={{this.barTitle}} >
+
+         <GanttLineInlineChilds  @project={{@project}}  @childLines={{@project.jobs}} @chart={{@chart}}
+                                @parentLine={{this}}  
+                            />
 	 
       </div>
   </div>

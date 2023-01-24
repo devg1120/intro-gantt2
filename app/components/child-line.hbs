@@ -8,22 +8,7 @@
       </span>
    </div>
    <div class="gantt-line-timeline">
-   <!--
-       <div class="gantt-line-bar {{if isEditable 'gantt-line-bar-editable'}}" style={{barStyle}} title={{barTitle}} >
-       -->
        <div class="gantt-line-bar" style={{this.barStyle}} >
-	    <!--
-            <GanttLineInlineChilds @project={{@project}}/>
-	    -->
-	<!--
-            <GanttLineInlineChilds   @chart={{@chart}} @parentLine={{@parentLine}} />
-            <GanttLineInlineChilds   @job={{@job}} @chart={{@chart}} @parentLine={{this}} />
-	    -->
-	    <!--
-            <LineInlineChilds   @job={{@job}} @chart={{@chart}} @parentLine={{this}} />
-            <LineInlineChilds   @job={{@job}} @chart={{@chart}} @parentLine={{@parentLine}} @style={{barStyle}} @title={{barTitle}}  />
-            <LineInlineChilds   @job={{@job}} @chart={{@chart}} @parentLine={{@parentLine}}  />
-	    -->
             <LineInlineChilds   @job={{@job}} @chart={{@chart}} @parentLine={{@parentLine}} @style={{this.barStyle}} @title={{this.barTitle}}  />
 	    
 	    <div class="gantt-line-bar-content ember-view">{{@job.title}}</div>

@@ -74,6 +74,7 @@
   },
   "dependencies": {
     "@ember/render-modifiers": "^2.0.4",
+    "ember-date-fns": "^0.5.0",
     "moment": "^2.29.4",
     "moment-timezone": "^0.5.40"
   }

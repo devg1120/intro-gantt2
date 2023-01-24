@@ -41,7 +41,12 @@ export default class GanttLineComponent extends Component {
 
   constructor(owner, args) {
     super(owner, args);
-
+    this.dateStart = args.dateStart;
+    this.dateEnd = args.dateEnd;
+    this.inllineChilds = args.inlineChilds;
+    this.title = args.title;
+    this.project = args.project;
+    this.chart = args.chart;
     if (get(this, 'isEditable') && !this._handleMoveStart) {
       this._handleMoveStart = bind(this, this.activateMove);
       this._handleResizeLeft = bind(this, this.activateResizeLeft);
@@ -49,11 +54,13 @@ export default class GanttLineComponent extends Component {
       this._handleResizeMove = bind(this, this.resizeBar);
       this._handleFinish = bind(this, this.deactivateAll);
     }
-/*
+
+	  /*
     // bar reference
     let bar = this.element.querySelector('.gantt-line-bar');
     set(this, 'barElement', bar);
 
+	  
     // chart reference
     let chart = get(this, 'chart').element;
     set(this, 'chartElement', chart);
@@ -75,8 +82,8 @@ export default class GanttLineComponent extends Component {
     // resize/move
     document.addEventListener('mousemove', this._handleResizeMove);
     document.addEventListener('mouseup', this._handleFinish);
-
 */
+
   };
 
 /*
@@ -133,6 +140,7 @@ export default class GanttLineComponent extends Component {
 
   @computed('dateStart', 'dayWidth','chart.viewStartDate')
   get barOffset(){
+    console.log("barOffset")
     return get(this, 'chart').dateToOffset( get(this, 'dateStart') );
   }
 
@@ -150,6 +158,7 @@ export default class GanttLineComponent extends Component {
     if (get(this, 'color')) {
       style+= `background-color:${get(this, 'color')}`;
     }
+    console.log(style)
     return htmlSafe(style);
   }
 

@@ -17,6 +17,8 @@ import dateUtil from '../utils/date-util';
 //import moment from 'moment';
 //import momentFormat from 'ember-moment/computeds/format';
 
+//import { format, compareAsc } from 'date-fns'
+
 export default class GanttTimelineComponent extends Component {
   layout
   classNames= ['gantt-timeline'];

@@ -25,6 +25,15 @@ export default class GanttLineInlineChildsComponent extends Component {
     this.childLines = args.childLines;
     this.parentLine = args.parentLine;
      
+    //this.job = args.job;
+    this.project = args.project;
+
+    //console.log(this.job);
+    this.dateStart = this.project.dateStart;
+    this.dateEnd   = this.project.dateEnd;
+    //this.color   = this.project.color;
+    //this.style   = args.style;
+    //this.title   = args.title;
 
     this.calculatePeriods();
   }
