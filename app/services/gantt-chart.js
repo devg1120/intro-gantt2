@@ -152,6 +152,8 @@ export default class GanttChartService extends Service {
     class Project {
       title = 'empty';
       childs = [];
+      collapsed = false;
+
       @alias('childs') jobs;
 
       @mapBy('childs', 'dateStart') childsStart;

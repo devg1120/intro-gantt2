@@ -1,7 +1,10 @@
 
 
 <div class="gantt-line">
-  <GanttLineTitle @project={{@project}}/>
+<!--
+  <GanttLineTitle @project={{@project}} />
+-->
+  <GanttLineTitle @project={{@project}}  @onClick={{this.collapse_toggle}} />
   
   <div class="gantt-line-timeline">
 
@@ -10,6 +13,8 @@
          <GanttLineInlineChilds  @project={{@project}}  @childLines={{@project.jobs}} @chart={{@chart}}
                                 @parentLine={{this}}  
                             />
+          <div class="gantt-line-bar-content ember-view">{{@project.title}}</div>
+
 	 
       </div>
   </div>
@@ -19,18 +24,24 @@
 {{! child lines }}
 
 <div class="gantt-line-childs">
- {{#each @project.jobs as |job|}}     
-       <!--
-       <GanttLineInlineChilds  @project={{@project}}/>
-       -->
-       
-       <ChildLine  @job={{job}}
-                   @parentLine={{this}}
-                   @chart={{@chart}}
-                   >
-       </ChildLine>
-       
- {{/each}}     
+
+
+   <BsCollapse @collapsed={{this.collapsed}}  >
+       {{#unless this.collapsed }}
+
+           {{#each @project.jobs as |job|}}     
+                 <!--
+                 <GanttLineInlineChilds    @job={{job}}  @parentLine={{this}}  @chart={{@chart}} @project={{@project}}/>
+                 -->
+                 <ChildLine  @job={{job}}
+                             @parentLine={{this}}
+                             @chart={{@chart}}
+                             >
+                 </ChildLine>
+           {{/each}}     
+
+       {{/unless}}
+
+   </BsCollapse>
 
 </div>
-

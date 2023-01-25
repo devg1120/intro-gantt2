@@ -11,15 +11,9 @@
 <div class="gantt-timeline-grid" 
   {{did-insert this.registerListener}}
 >
-<!--
-TIMELINE-SCALE
-<li>{{this.chart}}</li>
-<li>{{this.chart.dayWidth}}</li>
-TIMELINE-SCALE-TAIL
--->
   {{! today line }}
   {{#if @showToday}}
-    <div class="gantt-timeline-today" style={{todayStyle}}><div></div></div>
+    <div class="gantt-timeline-today" style={{this.todayStyle}}><div></div></div>
   {{/if}}
 
   {{! vertical grid}}

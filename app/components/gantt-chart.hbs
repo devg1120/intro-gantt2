@@ -1,7 +1,7 @@
 <div class="gantt-chart">
    <div class="gantt-chart-innner">
    
-     <GanttTimeline  @showToday={{@showToday}} @chart={{this}} />
+     <GanttTimeline  @showToday={{this.showToday}} @chart={{this}} />
    
      <div class="gantt-lines">
         {{#each this.projects as |project|}}

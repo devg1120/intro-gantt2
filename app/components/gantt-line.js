@@ -6,10 +6,14 @@ import { htmlSafe } from '@ember/template';
 import {computed,get,set} from '@ember/object';
 import {isEmpty} from '@ember/utils';
 import {alias, or} from '@ember/object/computed';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
+
 
 export default class GanttLineComponent extends Component {
 
-
+  //@tracked collapsed_tmp = false;
+  @tracked collapsed = false;
 
   chart= null;
 
@@ -23,6 +27,7 @@ export default class GanttLineComponent extends Component {
 
   dateEnd= null;
 
+  
   // collapsed: false, // use ember-bootstrap !
 
   color= null;
@@ -47,6 +52,9 @@ export default class GanttLineComponent extends Component {
     this.title = args.title;
     this.project = args.project;
     this.chart = args.chart;
+    //this.collapsed_tmp = false;
+    this.collapsed = false;
+
     if (get(this, 'isEditable') && !this._handleMoveStart) {
       this._handleMoveStart = bind(this, this.activateMove);
       this._handleResizeLeft = bind(this, this.activateResizeLeft);
@@ -175,6 +183,15 @@ export default class GanttLineComponent extends Component {
     return '';
   }
 
+   @action
+   collapse_toggle() {
+
+     //this.project.collapsed_tmp = !this.project.collapsed_tmp;
+     //this.collapsed_tmp = !this.collapsed_tmp;
+     this.collapsed = !this.collapsed;
+     console.log("collapse_toggle()",  this.collapsed);
+
+   }
 
   /**
    * Get element offset to parent (including scroll)

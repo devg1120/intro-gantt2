@@ -45,14 +45,22 @@ export default class GanttChartComponent extends Component {
   }
 */
     dayWidth = 99;
-  constructor() {
-    super(...arguments);
+   showToday = false;
 
-    this.viewStartDate = null;
+//  constructor() {
+//    super(...arguments);
+
+  constructor(owner, args) {
+    super(owner, args);
+
+    this.dayWidth = args.dayWidth;
+    this.viewStartDate = args.viewStartDate;
+    console.log(this.dayWidth);
+    console.log(this.viewStartDate);
+
     this.viewEndDate = null;
     this.onViewDateChange = null;
 
-    this.dayWidth = 20;
     this.showToday = true;
     this.headerTitle = '';
     this.ganttWidth = 0;
@@ -61,7 +69,7 @@ export default class GanttChartComponent extends Component {
     this.scrollLeft = 0;
     this.infinityScroll = true;
 
-    this.viewStartDate = dateUtil.getNewDate();
+    //this.viewStartDate = dateUtil.getNewDate();
     let endDate = dateUtil.getNewDate(this.viewStartDate);
     endDate.setMonth(endDate.getMonth() + 3);
     this.viewEndDate = endDate;
