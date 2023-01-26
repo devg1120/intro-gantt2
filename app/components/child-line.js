@@ -6,6 +6,11 @@ import { htmlSafe } from '@ember/template';
 import {computed,get,set} from '@ember/object';
 import {isEmpty} from '@ember/utils';
 import {alias, or} from '@ember/object/computed';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
+
+import dateUtil from '../utils/date-util';
+
 
 export default class ChildLineComponent extends Component {
 
@@ -27,7 +32,7 @@ export default class ChildLineComponent extends Component {
 
   color= null;
 
-  isEditable= false;
+  isEditable= true;
 
   chartElement= null;
 
@@ -45,6 +50,12 @@ export default class ChildLineComponent extends Component {
     this.dateEnd   = args.job.dateEnd;
     this.color   = args.job.color;
     this.chart   = args.chart;
+    this.job   = args.job;
+    this.project   = args.project;
+    this.chartElement   = args.chartElement;
+    this.onDataUpdate   = args.onDataUpdate;
+
+    //console.log(this.chartElement) ;
     if (get(this, 'isEditable') && !this._handleMoveStart) {
       this._handleMoveStart = bind(this, this.activateMove);
       this._handleResizeLeft = bind(this, this.activateResizeLeft);
@@ -52,19 +63,27 @@ export default class ChildLineComponent extends Component {
       this._handleResizeMove = bind(this, this.resizeBar);
       this._handleFinish = bind(this, this.deactivateAll);
     }
+   //this.didInsertElement();
   };
 
-/*
-  didInsertElement() {
-    this._super(...arguments);
+
+  //didInsertElement() {
+  @action
+  createElement(element_) {
+    //console.log("createElement() {", element_);
+    this.element = element_;
+
 
     // bar reference
     let bar = this.element.querySelector('.gantt-line-bar');
     set(this, 'barElement', bar);
 
     // chart reference
-    let chart = get(this, 'chart').element;
-    set(this, 'chartElement', chart);
+    //let chart = get(this, 'chart').element_;
+    //let chart = this.chart.element_;
+    //console.log(chart);
+    //set(this, 'chartElement', chart);
+    //console.log(this.chartElement);
 
     // below, only if editable
     if (!get(this, 'isEditable')) return;
@@ -84,8 +103,9 @@ export default class ChildLineComponent extends Component {
     document.addEventListener('mousemove', this._handleResizeMove);
     document.addEventListener('mouseup', this._handleFinish);
 
-  },
-*/
+
+  };
+
 /*
   willDestroyelement() {
     this._super(...arguments);
@@ -176,6 +196,7 @@ export default class ChildLineComponent extends Component {
   };
 
   initTimlineOffset() {
+    this.chartElement = this.chart.element_;
     let timelineElement = get(this, 'chartElement').querySelector('.gantt-line-timeline');
     set(this, 'timelineOffset', this.offsetLeft(timelineElement));
     set(this, 'movingMouseOffset', 0);
@@ -187,6 +208,7 @@ export default class ChildLineComponent extends Component {
   movingMouseOffset= 0;
 
   activateMove(e) {
+    console.log("activateMove");
     e.preventDefault();
     this.initTimlineOffset();
 
@@ -202,6 +224,7 @@ export default class ChildLineComponent extends Component {
 
   };
 
+  @action
   resizeBar(e) {
     if (this.isDestroyed) return;
     if (!get(this, 'isEditing')) return;
@@ -231,9 +254,11 @@ export default class ChildLineComponent extends Component {
   };
 
   deactivateAll(){
+
     if (this.isDestroyed) return;
 
     // check if something happened on this line
+   /*
     let action = '';
     if (get(this, 'isResizing')) {
       action = 'resize';
@@ -241,17 +266,23 @@ export default class ChildLineComponent extends Component {
     } else if (get(this, 'isMoving')) {
       action = 'move';
     }
-
+*/
     set(this, 'isResizingLeft', false);
     set(this, 'isResizingRight', false);
     set(this, 'isMoving', false);
-
+/*
     if (!isEmpty(action)) {
       let callback = get(this, 'onDateChange');
       if (typeof callback === 'function') {
         callback(get(this, 'dateStart'), get(this, 'dateEnd'), action);
       }
     }
+    */
+      set(this.job, 'dateStart', this.dateStart); 
+      set(this.job, 'dateEnd', this.dateEnd);
+	  //
+    //this.onDataUpdate(this.job, this.dateStart, this.dateEnd);
+
   }
 
 

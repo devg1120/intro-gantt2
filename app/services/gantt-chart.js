@@ -202,8 +202,8 @@ export default class GanttChartService extends Service {
     let projects = new Array();  ///     honnbann 
     let today = new Date();
     let types = jobTypes;
-    var pj = new Project('Coca Cola Logo--');
-    pj.childs = [
+    var pj = new Project('ACoca Cola Logo');
+    pj.jobs = [
       {
         title: types[0].title,
         color: types[0].color,
@@ -233,7 +233,7 @@ export default class GanttChartService extends Service {
 
     var pj = new Project('Coca Cola Website');
     let todayAfter = dateUtil.datePlusDays(today, 15);
-    pj.childs = [
+    pj.jobs = [
       {
         title: types[0].title,
         color: types[0].color,

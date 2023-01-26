@@ -10,7 +10,7 @@
 
        <div class="gantt-line-bar" style={{this.barStyle}} title={{this.barTitle}} >
 
-         <GanttLineInlineChilds  @project={{@project}}  @childLines={{@project.jobs}} @chart={{@chart}}
+         <GanttLineInlineChilds  @project={{@project}}  @childLines={{@project.jobs}} @chart={{@chart}} @setTopLine={{this.setTopLine}}
                                 @parentLine={{this}}  
                             />
           <div class="gantt-line-bar-content ember-view">{{@project.title}}</div>
@@ -31,13 +31,25 @@
 
            {{#each @project.jobs as |job|}}     
                  <!--
-                 <GanttLineInlineChilds    @job={{job}}  @parentLine={{this}}  @chart={{@chart}} @project={{@project}}/>
+                 <GanttLineInlineChilds    
+                             @job={{job}}  
+                             @parentLine={{this}}  
+                             @chart={{@chart}} @project={{@project}}
+                             @chartElement={{@chartElement}}
+                             @onDataUpdate={{this.onDataUpdate}}
+
+                 />
                  -->
+
                  <ChildLine  @job={{job}}
                              @parentLine={{this}}
                              @chart={{@chart}}
+                             @project={{@project}}
+                             @chartElement={{@chartElement}}
+                             @onDataUpdate={{this.onDataUpdate}}
                              >
                  </ChildLine>
+
            {{/each}}     
 
        {{/unless}}

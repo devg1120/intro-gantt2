@@ -8,12 +8,18 @@ import {isEmpty} from '@ember/utils';
 import {alias, or} from '@ember/object/computed';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
+//import { set, get } from '@ember/object';
 
+import dateUtil from '../utils/date-util';
 
 export default class GanttLineComponent extends Component {
 
   //@tracked collapsed_tmp = false;
   @tracked collapsed = false;
+
+  //@tracked project = null;
+  //@tracked jobs ;
+  //@tracked childLines;
 
   chart= null;
 
@@ -51,9 +57,12 @@ export default class GanttLineComponent extends Component {
     this.inllineChilds = args.inlineChilds;
     this.title = args.title;
     this.project = args.project;
+    this.jobs = args.project.jobs;
     this.chart = args.chart;
+
     //this.collapsed_tmp = false;
     this.collapsed = false;
+
 
     if (get(this, 'isEditable') && !this._handleMoveStart) {
       this._handleMoveStart = bind(this, this.activateMove);
@@ -148,7 +157,6 @@ export default class GanttLineComponent extends Component {
 
   @computed('dateStart', 'dayWidth','chart.viewStartDate')
   get barOffset(){
-    console.log("barOffset")
     return get(this, 'chart').dateToOffset( get(this, 'dateStart') );
   }
 
@@ -166,7 +174,6 @@ export default class GanttLineComponent extends Component {
     if (get(this, 'color')) {
       style+= `background-color:${get(this, 'color')}`;
     }
-    console.log(style)
     return htmlSafe(style);
   }
 
@@ -193,6 +200,13 @@ export default class GanttLineComponent extends Component {
 
    }
 
+   @action
+   setTopLine(obj) {
+
+     console.log("setTopLine");
+     this.topLine = obj;
+
+   }
   /**
    * Get element offset to parent (including scroll)
    * TODO: use from util package or ember?
@@ -292,9 +306,9 @@ export default class GanttLineComponent extends Component {
       action = 'move';
     }
 
-    set(this, 'isResizingLeft', false);
-    set(this, 'isResizingRight', false);
-    set(this, 'isMoving', false);
+    //set(this, 'isResizingLeft', false);
+    //set(this, 'isResizingRight', false);
+    //set(this, 'isMoving', false);
 
     if (!isEmpty(action)) {
       let callback = get(this, 'onDateChange');
@@ -305,6 +319,22 @@ export default class GanttLineComponent extends Component {
   }
 
 
+  @action
+  onDataUpdate(job, startDate, endDate) {
 
+    console.log("dataUpdate");
+    //console.dir(job);
+    //console.dir(this.project);
+
+      set(job, 'dateStart', startDate); // NOT NEEDED -> is set directly
+      set(job, 'dateEnd', endDate);
+    //this.project.jobs[0].dateStart = startDate;
+    //this.project.jobs[0].dateEnd = endDate;
+    //console.dir(this.project);
+     //this.topLine.reloadPeriods();
+     //this.topLine.calculatePeriods();
+     //this.project.maxEndDate  =  dateUtil.datePlusDays(this.project.maxEndDate, 1);
+
+  }
 
 }

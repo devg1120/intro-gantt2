@@ -46,6 +46,7 @@ export default class GanttChartComponent extends Component {
 */
     dayWidth = 99;
    showToday = false;
+    @tracked element_;
 
 //  constructor() {
 //    super(...arguments);
@@ -68,6 +69,7 @@ export default class GanttChartComponent extends Component {
     this.stickyOffset = 0;
     this.scrollLeft = 0;
     this.infinityScroll = true;
+
 
     //this.viewStartDate = dateUtil.getNewDate();
     let endDate = dateUtil.getNewDate(this.viewStartDate);
@@ -141,6 +143,12 @@ export default class GanttChartComponent extends Component {
     window.removeEventListener('resize', this._handleResize);
   };
 */
+
+  @action
+  createElement(element_) {
+    //console.log("createElement() ", element_);
+    this.element_ = element_;
+  }
 
   dateToOffset(date, startDate, includeDay) {
     let dayWidth = parseInt(this.dayWidth) || 0;

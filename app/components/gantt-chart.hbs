@@ -1,4 +1,4 @@
-<div class="gantt-chart">
+<div class="gantt-chart" {{did-insert this.createElement}} >
    <div class="gantt-chart-innner">
    
      <GanttTimeline  @showToday={{this.showToday}} @chart={{this}} />
@@ -11,6 +11,7 @@
            	         @title={{project.title}}
            	         @project={{project}}
            	         @chart={{this}}
+           	         @chartElement={{this.element_}}
            	         as |line|>
              </GanttLine>
         {{/each}}

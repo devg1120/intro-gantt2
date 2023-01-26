@@ -3,6 +3,7 @@ import {observer,get,set} from '@ember/object';
 import {debounce} from '@ember/runloop';
 import {htmlSafe} from '@ember/template';
 import {isArray, A} from "@ember/array";
+import { tracked } from '@glimmer/tracking';
 
 import dateUtil from '../utils/date-util';
 
@@ -11,7 +12,8 @@ export default class LineInlineChildsComponent extends Component {
   layout;
   classNames= ['gantt-line-inline-childs'];
 
-  job= null;
+  @tracked job= null;
+
   chart= null;
   parentLine= null;
 

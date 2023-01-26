@@ -1,8 +1,12 @@
 import Component from '@glimmer/component';
-import {observer,get,set} from '@ember/object';
+//import {observer,get,set} from '@ember/object';
 import {debounce} from '@ember/runloop';
 import {htmlSafe} from '@ember/template';
 import {isArray, A} from "@ember/array";
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
+import {computed,observer,get,set,setProperties} from '@ember/object';
+
 
 import dateUtil from '../utils/date-util';
 
@@ -12,12 +16,16 @@ export default class GanttLineInlineChildsComponent extends Component {
   classNames= ['gantt-line-inline-childs'];
 
   job= null;
+
   chart= null;
   parentLine= null;
+  childLines= null;
 
   stripeWidth= 3;
 
   debounceTime= 0;
+  @tracked periods;
+
 
   constructor(owner, args) {
     super(owner, args);
@@ -34,7 +42,8 @@ export default class GanttLineInlineChildsComponent extends Component {
     //this.color   = this.project.color;
     //this.style   = args.style;
     //this.title   = args.title;
-
+    this.setTopLinefunc = args.setTopLine;
+    this.setTopLinefunc(this);
     this.calculatePeriods();
   }
 
@@ -45,20 +54,35 @@ export default class GanttLineInlineChildsComponent extends Component {
   },
 */
 
-  childLines= null;
-  periods= null;
+//  @tracked childLines= null;
+//  @tracked periods= null;
+/*
   reloadPeriods= observer('parentLine.{dateStart,dateEnd,dayWidth}','childLines','childLines.@each.{dateStart,dateEnd,color}', function() {
     debounce(this, this.calculatePeriods, get(this, 'debounceTime'));
   });
+*/
+
+@action
+  reloadPeriods() {
+    console.log("reloadPeriods()");
+    debounce(this, this.calculatePeriods, get(this, 'debounceTime'));
+
+  }
+
 
   calculatePeriods() {
 
+    console.log("calculatePeriods()");
+    //console.log(this.periods);
     // go through all jobs and generate compound child elements
     let chart = get(this, 'chart'),
         childs = get(this, 'childLines'),
         start = get(this, 'parentLine.dateStart'),
         end = get(this, 'parentLine.dateEnd');
 
+     console.dir(childs);
+     console.dir(start);
+     console.dir(end);
     // generate period segments
     let periods = dateUtil.mergeTimePeriods(childs, start, end);
 
@@ -72,7 +96,10 @@ export default class GanttLineInlineChildsComponent extends Component {
     }
 
     set(this, 'periods', periods);
+    //this.periods= periods;
+    //console.log(this.periods);
   };
+
 
   getBackgroundStyle(childs) {
 
