@@ -1,5 +1,10 @@
 <div class="gantt-chart" {{did-insert this.createElement}} >
-   <div class="gantt-chart-innner">
+   <div class="gantt-chart-innner"   
+                {{on "mousedown" this.onMouseDown}}
+                {{on "mouseup"   this.onMouseUp  }}
+                {{on "mousemove"  this.onMouseMove }}
+
+   >
    
      <GanttTimeline  @showToday={{this.showToday}} @chart={{this}} />
    
