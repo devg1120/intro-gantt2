@@ -264,27 +264,36 @@ export default class GanttChartComponent extends Component {
     //https://web-designer.cman.jp/javascript_ref/event_list/
 	
     @action onMouseDown(e) {
-        e.preventDefault();
-	e.stopPropagation();
-        console.log("mouse down")
-	this.mouse_moving = true;
+        if (e.target.className.indexOf('day') !== -1) {
+           e.preventDefault();
+	   e.stopPropagation();
+           console.log("mouse down")
+	   this.mouse_moving = true;
+	}
     }
     @action onMouseUp(e) {
-        e.preventDefault();
-	e.stopPropagation();
-        console.log("mouse up")
-	this.mouse_moving = false;
+        if (e.target.className.indexOf('day') !== -1) {
+           e.preventDefault();
+	   e.stopPropagation();
+           console.log("mouse up")
+	   this.mouse_moving = false;
+	}
     }
     @action onMouseMove(e) {
-        e.preventDefault();
-	e.stopPropagation();
-        if (this.mouse_moving) {
-		if (e.clientX < this.clientX) {
-                      console.log("mouse move left")
-                } else {
-                      console.log("mouse move right")
-		}
-                this.clientX = e.clientX
+        if (e.target.className.indexOf('day') !== -1) {
+           if (this.mouse_moving) {
+                   //console.log(typeof(e.target.className))
+                   console.log(e.target.className)
+                   e.preventDefault();
+	           e.stopPropagation();
+
+	   	if (e.clientX < this.clientX) {
+                         console.log("mouse move left")
+                   } else {
+                         console.log("mouse move right")
+	   	}
+                   this.clientX = e.clientX
+	   }
 	}
     }
 }
