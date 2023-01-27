@@ -7,6 +7,7 @@ import dateUtil from '../utils/date-util';
 
 import { computed, get, set } from '@ember/object';
 import { mapBy, max, min } from '@ember/object/computed';
+import { tracked } from '@glimmer/tracking';
 
 const jobTypes = [
   {
@@ -161,6 +162,9 @@ export default class GanttChartService extends Service {
 
       @mapBy('childs', 'dateEnd') childsEnd;
       @max('childsEnd') maxEnd;
+
+      //@tracked minStartDate;
+      //@tracked maxEndDate;
 
       constructor(title) {
         set(this, 'title', title);

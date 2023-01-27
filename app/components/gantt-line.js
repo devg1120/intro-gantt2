@@ -29,9 +29,9 @@ export default class GanttLineComponent extends Component {
 
   title= '';
 
-  dateStart= null;
+  @tracked dateStart= null;
 
-  dateEnd= null;
+  @tracked dateEnd= null;
 
   
   // collapsed: false, // use ember-bootstrap !
@@ -196,14 +196,14 @@ export default class GanttLineComponent extends Component {
      //this.project.collapsed_tmp = !this.project.collapsed_tmp;
      //this.collapsed_tmp = !this.collapsed_tmp;
      this.collapsed = !this.collapsed;
-     console.log("collapse_toggle()",  this.collapsed);
+     //console.log("collapse_toggle()",  this.collapsed);
 
    }
 
    @action
    setTopLine(obj) {
 
-     console.log("setTopLine");
+     //console.log("setTopLine");
      this.topLine = obj;
 
    }
@@ -326,15 +326,16 @@ export default class GanttLineComponent extends Component {
     //console.dir(job);
     //console.dir(this.project);
 
-      set(job, 'dateStart', startDate); // NOT NEEDED -> is set directly
-      set(job, 'dateEnd', endDate);
+      //set(job, 'dateStart', startDate); // NOT NEEDED -> is set directly
+     // set(job, 'dateEnd', endDate);
     //this.project.jobs[0].dateStart = startDate;
     //this.project.jobs[0].dateEnd = endDate;
     //console.dir(this.project);
      //this.topLine.reloadPeriods();
      //this.topLine.calculatePeriods();
      //this.project.maxEndDate  =  dateUtil.datePlusDays(this.project.maxEndDate, 1);
-
+    this.dateStart = this.project.minStartDate;
+    this.dateEnd = this.project.maxEndDate;
   }
 
 }

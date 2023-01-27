@@ -47,6 +47,8 @@ export default class GanttChartComponent extends Component {
     dayWidth = 99;
    showToday = false;
     @tracked element_;
+    @tracked dateStart;
+    @tracked dateEnd;
 
 //  constructor() {
 //    super(...arguments);
@@ -55,9 +57,11 @@ export default class GanttChartComponent extends Component {
     super(owner, args);
 
     this.dayWidth = args.dayWidth;
+    this.dateStart = args.dateStart;
+    this.dateEnd = args.dateEnd;
     this.viewStartDate = args.viewStartDate;
-    console.log(this.dayWidth);
-    console.log(this.viewStartDate);
+    //console.log(this.dayWidth);
+    //console.log(this.viewStartDate);
 
     this.viewEndDate = null;
     this.onViewDateChange = null;
@@ -90,7 +94,7 @@ export default class GanttChartComponent extends Component {
 
     //this.projects = this.gantt.getTest2();
     this.projects = this.gantt.getTest3();
-
+    console.log(this.projects);
     //this.projects = this.gantt.getDataScenario1();
 
     // bind listener functions

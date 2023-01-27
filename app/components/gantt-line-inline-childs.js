@@ -24,8 +24,12 @@ export default class GanttLineInlineChildsComponent extends Component {
   stripeWidth= 3;
 
   debounceTime= 0;
+  @tracked dateStart;
+  @tracked dateEnd;
   @tracked periods;
-
+  @tracked minStartDate;
+  @tracked maxEndDate;
+  @tracked project;
 
   constructor(owner, args) {
     super(owner, args);
@@ -37,8 +41,10 @@ export default class GanttLineInlineChildsComponent extends Component {
     this.project = args.project;
 
     //console.log(this.job);
-    this.dateStart = this.project.dateStart;
-    this.dateEnd   = this.project.dateEnd;
+    //this.dateStart = this.project.dateStart;
+    //this.dateEnd   = this.project.dateEnd;
+    this.dateStart = this.project.minStartDate;
+    this.dateEnd   = this.project.maxEndDate;
     //this.color   = this.project.color;
     //this.style   = args.style;
     //this.title   = args.title;
@@ -62,27 +68,57 @@ export default class GanttLineInlineChildsComponent extends Component {
   });
 */
 
-@action
-  reloadPeriods() {
-    console.log("reloadPeriods()");
-    debounce(this, this.calculatePeriods, get(this, 'debounceTime'));
+  //@computed('parentLine.{dateStart,dateEnd,dayWidth}','childLines','childLines.@each.{dateStart,dateEnd,color}') 
+  @computed('this.dateStart','this.dateEnd','this.project', 'this.project.minStartDate', 'this.project.maxEndDate') 
+  get periods() {
+    console.log("get periods()");
+    //console.log(this.periods);
+    // go through all jobs and generate compound child elements
+    let chart = get(this, 'chart'),
+        childs = get(this, 'childLines'),
+        //start = get(this, 'parentLine.dateStart'),
+        //end = get(this, 'parentLine.dateEnd');
+        start = get(this, 'project.minStartDate'),
+        end = get(this, 'project.maxEndDate');
+
+     //console.dir(childs);
+     console.log("parentLine start:",start);
+     console.log("parentLine end:",end);
+    // generate period segments
+    let periods = dateUtil.mergeTimePeriods(childs, start, end);
+
+    // calculate width of segments
+    if (periods && periods.length > 0) {
+      periods.forEach(period => {
+        period.width = chart.dateToOffset(period.dateEnd, period.dateStart, true);
+        period.background = this.getBackgroundStyle(period.childs);
+        period.style = htmlSafe(`width:${period.width}px;background:${period.background};`);
+      });
+    }
+
+  //  return periods;
+  return {};
 
   }
 
 
   calculatePeriods() {
+    console.log("calculatePeriods()");
 
+  /*
     console.log("calculatePeriods()");
     //console.log(this.periods);
     // go through all jobs and generate compound child elements
     let chart = get(this, 'chart'),
         childs = get(this, 'childLines'),
-        start = get(this, 'parentLine.dateStart'),
-        end = get(this, 'parentLine.dateEnd');
+        //start = get(this, 'parentLine.dateStart'),
+        //end = get(this, 'parentLine.dateEnd');
+        start = get(this, 'project.minStartDate'),
+        end = get(this, 'project.maxEndDate');
 
-     console.dir(childs);
-     console.dir(start);
-     console.dir(end);
+     //console.dir(childs);
+     console.log("parentLine start:",start);
+     console.log("parentLine end:",end);
     // generate period segments
     let periods = dateUtil.mergeTimePeriods(childs, start, end);
 
@@ -97,7 +133,8 @@ export default class GanttLineInlineChildsComponent extends Component {
 
     set(this, 'periods', periods);
     //this.periods= periods;
-    //console.log(this.periods);
+    console.log(this.periods);
+*/
   };
 
 
@@ -106,6 +143,7 @@ export default class GanttLineInlineChildsComponent extends Component {
     if (!isArray(childs) || childs.length === 0) {
       return 'transparent';
     }
+
 
     let colors = A(A(childs).getEach('color'));
     colors = colors.uniq(); // every color only once!

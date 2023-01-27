@@ -208,7 +208,7 @@ export default class ChildLineComponent extends Component {
   movingMouseOffset= 0;
 
   activateMove(e) {
-    console.log("activateMove");
+    //console.log("activateMove");
     e.preventDefault();
     this.initTimlineOffset();
 
@@ -280,8 +280,9 @@ export default class ChildLineComponent extends Component {
     */
       set(this.job, 'dateStart', this.dateStart); 
       set(this.job, 'dateEnd', this.dateEnd);
+          console.log(this.project);
 	  //
-    //this.onDataUpdate(this.job, this.dateStart, this.dateEnd);
+    this.onDataUpdate(this.job, this.dateStart, this.dateEnd);
 
   }
 

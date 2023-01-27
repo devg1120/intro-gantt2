@@ -10,13 +10,17 @@
 
        <div class="gantt-line-bar" style={{this.barStyle}} title={{this.barTitle}} >
 
+<!--
          <GanttLineInlineChilds  @project={{@project}}  @childLines={{@project.jobs}} @chart={{@chart}} @setTopLine={{this.setTopLine}}
-                                @parentLine={{this}}  
+                                @parentLine={{this}} @minStartDate={{@project.minStartDate}}  
                             />
+-->
+
           <div class="gantt-line-bar-content ember-view">{{@project.title}}</div>
 
 	 
       </div>
+
   </div>
 
 </div>
